@@ -1,0 +1,42 @@
+version: "3.7"
+services: 
+    web:
+        container_name: "web"
+        restart: always
+        image: nginx:1.21.0-alpine
+        volumes:
+            - './web-source:/usr/share/nginx/html'
+        ports:
+            - '80:80'
+        environment: 
+            - npm_config_unsafe_perm=true
+    server:
+        container_name: "minecraft_server"
+        restart: always
+        image: itzg/minecraft-server
+        ports: 
+            - 25565:25565
+        environment: 
+            EULA: 'TRUE'
+            TYPE: 'SPIGOT'
+            MEMORY: '2G'
+            MAX_PLAYERS: 30
+            MOTD: 'UPHMC.TK - serwer od studentów dla studentów'
+            OPS: 'Mustafo'
+            VERSION: '1.17'
+        volumes: 
+            - ./minecraft-server:/data
+        stdin_open: true
+        restart: always
+    postgres:
+        restart: always
+        image: postgres
+        environment:
+            POSTGRES_DB: "${DATABASE_NAME}"
+            POSTGRES_USER: "${DATABASE_USER}"
+            POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
+        volumes:
+            - ./data:/var/lib/postgresql/data
+        ports:
+            - '5432:5432'
+    
