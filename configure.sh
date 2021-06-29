@@ -17,7 +17,7 @@ db_password=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 16 ; echo '')
 
 echo -e " - creating a file"
 
-echo -e "DATABASE_USER=$db_user\\nDATABASE_NAME=$db_name\\nDATABASE_PASSWORD=$db_password" > config/.env;
+echo -e "DATABASE_USER=$db_user\\nDATABASE_NAME=$db_name\\nDATABASE_PASSWORD=$db_password" > database.env
 
 echo -e "${GREEN} - DONE - ${ENDCOLOR}"
 

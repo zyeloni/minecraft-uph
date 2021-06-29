@@ -19,24 +19,27 @@ services:
         environment: 
             EULA: 'TRUE'
             TYPE: 'SPIGOT'
-            MEMORY: '2G'
+            MEMORY: '1G'
             MAX_PLAYERS: 30
-            MOTD: 'UPHMC.TK - serwer od studentów dla studentów'
+            MOTD: 'UPHMC.TK - serwer UPH'
             OPS: 'Mustafo'
-            VERSION: '1.17'
+            VERSION: '1.16.5'
         volumes: 
-            - ./minecraft-server:/data
+            - ./server:/data
         stdin_open: true
         restart: always
     postgres:
+        env_file:
+            - "./config/.env"   
+        container_name: "postgres"
         restart: always
         image: postgres
         environment:
-            POSTGRES_DB: "${DATABASE_NAME}"
-            POSTGRES_USER: "${DATABASE_USER}"
-            POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
+            POSTGRES_DB: ${DATABASE_NAME}
+            POSTGRES_USER: ${DATABASE_USER}
+            POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
         volumes:
-            - ./data:/var/lib/postgresql/data
+            - ./database:/var/lib/postgresql/data
         ports:
             - '5432:5432'
     
